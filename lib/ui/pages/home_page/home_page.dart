@@ -23,52 +23,69 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('my note'),
       ),
-      body: ListView.builder(
-          itemCount: todoList.length,
-          itemBuilder: (context, index) {
-            TodoModel data = todoList[index];
-            final title = data.title.isEmpty ? 'title' : data.title;
-            final dateTime = model.dateFormat(data.dateTime);
+      body: todoList.isEmpty
+          ? const Center(
+              child: Text('no data'),
+            )
+          : ListView.builder(
+              itemCount: todoList.length,
+              itemBuilder: (context, index) {
+                TodoModel data = todoList[index];
+                final title = data.title.isEmpty ? 'title' : data.title;
+                final dateTime = model.dateFormat(data.dateTime);
 
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          title,
-                          style: const TextStyle(fontSize: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                data.content,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(dateTime),
+                            ],
+                          ),
                         ),
-                        Text(
-                          data.content,
-                          style: const TextStyle(fontSize: 16),
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                showEditDialog(index);
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.green,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDeleteDataDialog(index);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(dateTime),
                       ],
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              showEditDialog(index);
-                            },
-                            icon: const Icon(Icons.edit)),
-                        IconButton(
-                            onPressed: () {
-                              showDeleteDataDialog(index);
-                            },
-                            icon: const Icon(Icons.delete)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
+                  ),
+                );
+              }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
