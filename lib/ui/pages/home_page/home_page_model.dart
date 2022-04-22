@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/domain/dataproviders/local_dataprovider.dart';
 
 import '../../../domain/entities/todo_model.dart';
@@ -55,6 +56,12 @@ class HomePageModel extends ChangeNotifier {
 
     todoBox.deleteAt(index);
     _sendNotification('Deleted', 'Your todo ${_todoList[index].title} deleted');
+  }
+
+  String dateFormat(String dateTime) {
+    final dateF = DateFormat('dd-MMMM').format(DateTime.parse(dateTime));
+    final timeF = DateFormat('hh:mm').format(DateTime.parse(dateTime));
+    return '$dateF, $timeF';
   }
 
   void _sendNotification(String? title, String? body) async {

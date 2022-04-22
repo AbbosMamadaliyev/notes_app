@@ -6,6 +6,6 @@ A new Flutter application.
 
 note app
 
-hive, provider, CRUD , notification
+hive, provider, CRUD operations , notification
 
 ![](screen.png)

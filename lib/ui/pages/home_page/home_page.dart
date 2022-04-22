@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (context, index) {
             TodoModel data = todoList[index];
             final title = data.title.isEmpty ? 'title' : data.title;
+            final dateTime = model.dateFormat(data.dateTime);
 
             return Card(
               child: Padding(
@@ -38,9 +39,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(title),
-                        Text(data.content),
-                        Text(data.dateTime),
+                        Text(
+                          title,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          data.content,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        Text(dateTime),
                       ],
                     ),
                     Row(
